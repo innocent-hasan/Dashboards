@@ -1,5 +1,5 @@
 # DASHBORD MADE BY ME
-ODI CRICKET DASHBOARD SQl CODE 
+#ODI CRICKET DASHBOARD SQl CODE 
 create database power_bi;
 use power_bi;
 create or replace table ODI_match_results(
