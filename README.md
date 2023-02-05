@@ -95,3 +95,87 @@ create or replace table ODI_match_details_copy as
 select O.*,bt.runs as batsman_run,bt.bf,bt.sr as batsman_sr,bt.fours,bt.sixes,bt.batsman,bt.player_id as batsman_player_id,bl.overs,bl.mdns,bl.runs as bowler_runs,bl.wkts,bl.econ,bl.ave,bl.sr as bowler_sr,bl.bowler,bl.player_id as bowler_player_id from ODI_match_results O
 left Outer Join Batsman BT on O.Match_id = BT.Match_id
 left outer join Bowler BL on O.Match_id = Bl.match_id;
+
+# San Martin Sales Agent Analysis Sql Query 
+
+CREATE TABLE Customers(
+Customer_key int ,
+Customer_Name Varchar(30));
+
+SELECT * FROM Customers;
+
+CREATE TABLE Locations(
+Region_Key Int ,
+Region Varchar(30),
+Provincia varchar(30),
+Town Varchar(30));
+
+SELECT * FROM Locations;
+
+CREATE   TABLE Products(
+Product_Key varchar(50) ,
+Products_Category Varchar(30),
+Product Varchar(100));
+
+SELECT * FROM products;
+
+CREATE TABLE Sales_Agents(
+Sales_Agent_Key Varchar(20),
+Sales_Agent_Photo Varchar(100),
+Sales_Agent_Name Varchar(50));
+
+SELECT * FROM SALES_AGENTS;
+
+CREATE TABLE STORES(
+Store_Key varchar(30),
+Stores varchar(100));
+
+SELECT * FROM STORES;
+
+CREATE TABLE Sales_Tiendas_San_Martin(
+Order_Date date ,
+Shipping_date date,
+Invoice_Date date,
+Customer_Key int ,
+Store_Key varchar(30),
+Region_Key int ,
+Sales_Agent_Key varchar(30),
+Product_Key varchar(30),
+Unit_Price decimal ,
+Unit_Cost decimal ,
+Quanttity int ,
+Sales decimal ,
+Cost decimal ,
+Profit decimal);
+
+
+SELECT * FROM Customers;
+SELECT * FROM Locations;
+SELECT * FROM products;
+SELECT * FROM SALES_AGENTS;
+SELECT * FROM STORES;
+SELECT * FROM Sales_tiendas_san_martin;
+
+CREATE TABLE MT.SAN_MARTIN(
+SELECT C.Customer_Name , L.Region,L.Provincia,L.Town , P.products_category,P.product , SA.sales_agent_photo,SA.sales_agent_name , S.stores , ST.Order_date , ST.Shipping_date , ST.Invoice_date ,ST.unit_price , ST.unit_cost , ST.quanttity ,ST.Sales , ST.Cost , ST.profit
+FROM Sales_tiendas_san_martin ST
+LEFT OUTER JOIN  Customers C on ST.customer_key = C.customer_key 
+LEFT OUTER JOIN Locations L on ST.region_key = L.region_key 
+LEFT OUTER JOIN products P on ST.Product_key = P.Product_key 
+LEFT OUTER JOIN sales_agents SA on ST.sales_agent_key = SA.sales_agent_key 
+LEFT OUTER JOIN stores S on ST.Store_key = S.store_key );
+
+
+CREATE TABLE MT_SAN_MARTIN(
+SELECT C.Customer_Name , L.Region,L.Provincia,L.Town , P.products_category,P.product , SA.sales_agent_photo,SA.sales_agent_name , S.stores , ST.Order_date , ST.Shipping_date , ST.Invoice_date ,ST.unit_price , ST.unit_cost , ST.quanttity ,ST.Sales , ST.Cost , ST.profit
+FROM Sales_tiendas_san_martin ST
+LEFT OUTER JOIN  Customers C on ST.customer_key = C.customer_key 
+LEFT OUTER JOIN Locations L on ST.region_key = L.region_key 
+LEFT OUTER JOIN products P on ST.Product_key = P.Product_key 
+LEFT OUTER JOIN sales_agents SA on ST.sales_agent_key = SA.sales_agent_key 
+LEFT OUTER JOIN stores S on ST.Store_key = S.store_key );
+
+SELECT * FROM MT_SAN_MARTIN;
+SELECT customer_name, avg(sales) FROM MT_SAN_MARTIN group by customer_name;
+SELECT region,sum(profit) FROM MT_SAN_MARTIN GROUP BY region 
+
